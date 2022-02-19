@@ -1,7 +1,9 @@
 import argparse
 import os
+import json
+
 """
-def get_arguments()
+def get_arguments():
     parser = argparse.ArgumentParser(description='Test argparse')
     parser.add_argument("-f", help = "input file path", required = True)
     parser.add_argument("-l", help = "segment length", required = True)
@@ -19,7 +21,7 @@ def load_file(file_path): #načte vstupní soubor a ověří, jestli existuje, j
         quit()
     try:    
         with open(file_path, encoding="utf8") as file_name:
-            data = json.load(file_path)
+            data = json.load(file_name)
             return data
     except ValueError:
         print("Wrong file format.")
@@ -29,6 +31,6 @@ def load_file(file_path): #načte vstupní soubor a ověří, jestli existuje, j
         quit()
 
 args = get_arguments()
-data = load_file()
+data = load_file(args.f)
 print(data)
 """
