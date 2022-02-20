@@ -26,18 +26,21 @@ class Segment:
         print(self.points)
 
     def divide(self, max_length):
-        poly_seg.append(self.points[0])
         counter = 0
-        counter =+ 1
-        if max_length < dist(self.points[0], self.points[1]):
-            half_point = [(self.points[0][0]+self.points[1][0])/2, (self.points[0][1]+self.points[1][1])/2]
-            seg = Segment([self.points[0], half_point])
-            seg.divide(max_length)
-            print(half_point)
+        start_point = self.points[0]
+        end_point = self.points[1]
+        while max_length < dist(start_point, end_point):
+            counter =+ 1
+            half_point = [(start_point[0]+end_point[0])/2, (start_point[1]+end_point[1])/2]
+            end_point = half_point
+        for i in range(counter):
+            poly_seg.append([[start_point[0]+(dist(start_point[0],end_point[0])*2**i)],[start_point[1]+(dist(start_point[1],end_point[1])*2**i)]])
+        
 
 
 poly = Polyline([p0,p05,p1])
 print(poly.points)
 
 seg = Segment([coordinates[0],coordinates[1]])
-seg.divide(200)
+seg.divide(0)
+print(poly_seg)
