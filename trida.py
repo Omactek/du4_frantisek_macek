@@ -29,18 +29,21 @@ class Segment:
         counter = 0
         start_point = self.points[0]
         end_point = self.points[1]
+        print(dist(start_point, end_point))
+        poly_seg = [self.points[0]]
         while max_length < dist(start_point, end_point):
-            counter =+ 1
+            counter += 1
             half_point = [(start_point[0]+end_point[0])/2, (start_point[1]+end_point[1])/2]
             end_point = half_point
         for i in range(counter):
-            poly_seg.append([[start_point[0]+(dist(start_point[0],end_point[0])*2**i)],[start_point[1]+(dist(start_point[1],end_point[1])*2**i)]])
+            poly_seg.append([start_point[0]+(abs(start_point[0]-end_point[0]))*2**i,start_point[1]+(abs(start_point[1]-end_point[1]))*2**i])
+        poly_seg.append(self.points[1])
+        return poly_seg
         
 
 
-poly = Polyline([p0,p05,p1])
-print(poly.points)
+print([coordinates[0],coordinates[1]])
 
 seg = Segment([coordinates[0],coordinates[1]])
-seg.divide(0)
-print(poly_seg)
+poly_seg2 = seg.divide(2)
+print(poly_seg2)
