@@ -1,6 +1,7 @@
 import argparse
 import os
 import json
+import trida
 
 """
 def get_arguments():
