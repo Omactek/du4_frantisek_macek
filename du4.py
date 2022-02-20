@@ -1,9 +1,9 @@
 import argparse
 import os
 import json
-import trida
+import line_classes_module
 
-"""
+
 def get_arguments():
     parser = argparse.ArgumentParser(description='Test argparse')
     parser.add_argument("-f", help = "input file path", required = True)
@@ -33,5 +33,18 @@ def load_file(file_path): #načte vstupní soubor a ověří, jestli existuje, j
 
 args = get_arguments()
 data = load_file(args.f)
-print(data)
-"""
+
+for feature in data["features"]:
+    point_list = feature["geometry"]["coordinates"]
+    segm_list = []
+    for i in range(len(point_list)-1):
+        seg = line_classes_module.Segment([point_list[i], point_list[i+1]])
+        segm_list.append(seg)
+    temp_poly = line_classes_module.Polyline(segm_list)
+    temp_poly.divide_long_segments(int(args.l))
+    feature["geometry"]["coordinates"] = temp_poly.points()
+
+jsonString = json.dumps(data)
+jsonFile = open(f"{args.o}.json", "w")
+jsonFile.write(jsonString)
+jsonFile.close()
