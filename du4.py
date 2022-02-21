@@ -1,7 +1,7 @@
 import argparse
 import os
-import json
 import line_classes_module
+import geojson
 
 #function setups parser arguments
 def get_arguments():
@@ -11,6 +11,13 @@ def get_arguments():
     parser.add_argument("-o", help = "out file name", required = True)
     args = parser.parse_args()
     return args
+
+#Chekcs validity of output argument
+def check_format(arg):
+    if not arg.endswith(".geojson"):
+        print("Output file must be geojson")
+        quit()
+    return arg
 
 #function loads input file, verifies that it is not emty, it is not missing, it is right file format and can be accesed
 def load_file(file_path):
@@ -23,7 +30,7 @@ def load_file(file_path):
         quit()
     try:    
         with open(file_path, encoding="utf8") as file_name:
-            data = json.load(file_name)
+            data = geojson.load(file_name)
             return data
     except ValueError:
         print("Wrong file format.")
@@ -34,6 +41,9 @@ def load_file(file_path):
 
 #loads arguments
 args = get_arguments()
+
+#Chekcs validity of output argument
+check_format(args.o)
 
 #loads data
 data = load_file(args.f)
@@ -49,8 +59,8 @@ for feature in data["features"]:
     temp_poly.divide_long_segments(int(args.l)) #calls divide_long_segments method with max length on polyline objects
     feature["geometry"]["coordinates"] = temp_poly.points() #saves split polylines to data
 
-#creates json file with divided segments
-jsonString = json.dumps(data)
-jsonFile = open(f"{args.o}.geojson", "w")
+#creates geojson file with divided segments
+jsonString = geojson.dumps(data)
+jsonFile = open(args.o, "w")
 jsonFile.write(jsonString)
 jsonFile.close()
