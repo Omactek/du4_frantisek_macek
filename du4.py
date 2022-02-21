@@ -3,7 +3,7 @@ import os
 import json
 import line_classes_module
 
-
+#function setups parser arguments
 def get_arguments():
     parser = argparse.ArgumentParser(description='Test argparse')
     parser.add_argument("-f", help = "input file path", required = True)
@@ -12,7 +12,8 @@ def get_arguments():
     args = parser.parse_args()
     return args
 
-def load_file(file_path): #načte vstupní soubor a ověří, jestli existuje, je prázdný a jestli k němu má přístup
+#function loads input file, verifies that it is not emty, it not missing, it is right file format and can be accesed
+def load_file(file_path):
     try:
         if os.path.getsize(file_path) == 0:
             print("File is empty")
