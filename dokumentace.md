@@ -1,4 +1,4 @@
-# Delění lomených čar
+# Dělení lomených čar
 Jedná se o o program, který zajistí, že úseky liniových prvků nebudou delší než zvolená délka
 a případně je rozdělí na půl.
 
