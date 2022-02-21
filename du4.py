@@ -13,11 +13,22 @@ def get_arguments():
     return args
 
 #Chekcs validity of output argument
-def check_format(arg):
-    if not arg.endswith(".geojson"):
+def check_format(in_f,out_f,length):
+    if not in_f.endswith(".geojson"):
+        print("Input file must be geojson")
+        quit()
+    if not out_f.endswith(".geojson"):
         print("Output file must be geojson")
         quit()
-    return arg
+    try:
+        ch_len = int(length)
+        if ch_len <= 0:
+            print("Max segment length must be bigger than 0")
+            quit()
+    except ValueError:
+        print("Max segment length must be an integer")
+        quit()
+    return True
 
 #function loads input file, verifies that it is not emty, it is not missing, it is right file format and can be accesed
 def load_file(file_path):
@@ -43,7 +54,7 @@ def load_file(file_path):
 args = get_arguments()
 
 #Chekcs validity of output argument
-check_format(args.o)
+check_format(args.f,args.o,args.l)
 
 #loads data
 data = load_file(args.f)
